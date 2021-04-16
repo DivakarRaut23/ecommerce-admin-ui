@@ -1,30 +1,29 @@
 import React from 'react'
 import Header from './partials/Header'
 import Footer from './partials/Footer'
-import {Container,Row, Col} from 'react-bootstrap'
+
 
 import './defaultlayout.style.css'
+import SideBarNav from '../sidebar/SideBarNav'
 
 
 const DefaultLayout = ({children}) => {
     return (
-        <Container fluid>
-            <Row>
-                <Col xs={4}>
+             <div className="default-layout">
+                
                 <div className="left-bar">
-                    I am from left Menu
+                    <div className="admin-log p-2 mb-5">Admin Panel</div>
+                    <SideBarNav />
                 </div>
-                </Col>
-                <Col xs={8}>
+                              
                 <div className="main">
                 <Header/>
                 {children}
                 <Footer/>
                 </div>
-                </Col>
-            </Row>
-           
-        </Container>
+            </div>
+               
+      
     )
 }
 

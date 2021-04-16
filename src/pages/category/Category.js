@@ -1,16 +1,16 @@
 import React from 'react'
 import DefaultLayout from '../../components/layout/DefaultLayout'
 
-const Dashboard = () => {
+const Category = () => {
     return (
         
            <DefaultLayout>
 
-            Welcome to the Admin dashboard.
+            Welcome to the Category.
                
            </DefaultLayout>
         
     )
 }
 
-export default Dashboard
+export default Category
