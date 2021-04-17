@@ -8,7 +8,7 @@ function SideBarNav() {
             <ul>
                 <li>Dashboard</li>
                 <li><a href="/category">Category</a></li>
-                <li>Products</li>
+                <li><a href="/products">Products</a></li>
                 <li>Orders</li>
                 <li>Users</li>
                 <li>Account</li>

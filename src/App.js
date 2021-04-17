@@ -5,6 +5,8 @@ import PasswordReset from './pages/password-reset/PasswordReset';
 
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import Category from './pages/category/Category';
+import Product from './pages/product/Product';
+import AddProduct from './pages/product/AddProduct';
 
 
 
@@ -18,6 +20,12 @@ function App() {
           </Route>
           <Route path="/category">
             <Category />
+            </Route>
+          <Route path="/products">
+            <Product />
+          </Route>
+          <Route path="/product/new">
+            <AddProduct />
           </Route>
           <Route path="/reset-password">
             <PasswordReset/>
