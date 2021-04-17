@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
-import {Button, Form } from 'react-bootstrap'
+import {useSelector, useDispatch} from 'react-redux'
+import {Alert, Button, Form, Spinner } from 'react-bootstrap'
+import { addNewProduct } from '../../pages/product/productAction'
 
 const initialState = {
     name: "",
     qty:0,
-    isAvailable : "off",
+    // isAvailable : "off",
     price: 0,
     salePrice : 0,
     saleEndDate: null,
@@ -17,7 +19,11 @@ const initialState = {
 
 const AddProductForm = () => {
 
-    const [newProduct, setNewProduct] = useState(initialState)
+  const dispatch = useDispatch()
+
+  const [newProduct, setNewProduct] = useState(initialState)
+
+  const {isLoading,status, message} = useSelector(state => state.product)
 
     const handleOnChange = e => {
         const {name, value} = e.target
@@ -30,10 +36,20 @@ const AddProductForm = () => {
 
    const handleOnSubmit = e => {
        e.preventDefault()
+       dispatch(addNewProduct(newProduct))
+     
    }
 
     return (
         <div>
+          {isLoading && <Spinner variant="primary" animation="border" />}
+
+{message && (
+  <Alert variant={status === "success" ? "success" : "danger"}>
+    {message}
+  </Alert>
+)}
+
             <Form onSubmit={handleOnSubmit}>
   <Form.Group >
     <Form.Label>Name</Form.Label>
@@ -43,11 +59,11 @@ const AddProductForm = () => {
     </Form.Text> */}
   </Form.Group>
 
-  <Form.Group >
+  {/* <Form.Group >
     <Form.Label>Is Available</Form.Label>
     <Form.Check name="isAvailable" value={newProduct.isAvailable} onChange={handleOnChange} id="isAvailable" type="switch" label="Available" >
     </Form.Check>
-  </Form.Group>
+  </Form.Group> */}
 
   <Form.Group >
     <Form.Label>Price</Form.Label>

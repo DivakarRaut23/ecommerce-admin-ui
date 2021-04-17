@@ -1,36 +1,64 @@
-import React from 'react'
-import { Table } from 'react-bootstrap'
+import React, {useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import { Spinner, Table } from 'react-bootstrap'
+import { Alert, Button } from 'react-bootstrap'
+import {fetchProducts,removeProducts} from '../../pages/product/productAction'
+
 
 function ProductListTable() {
+
+  const dispatch = useDispatch()
+
+  const {isLoading, status, message, productList} = useSelector(state => state.product)
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch])
+
+  const handleOnDelete = id => {
+   
+    dispatch(removeProducts(id))
+  
+}
+
     return (
         <div>
+          {isLoading && <Spinner variant="primary" animation="border" />}
+
+{status === "error" && (
+  <Alert variant={status === "success" ? "success" : "danger"}>
+    {message}
+  </Alert>
+)}
             <Table striped bordered hover>
   <thead>
     <tr>
       <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
+      <th>Status</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Thumbnail</th>
+      <th>Update</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>1</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td colSpan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    
+      {
+        productList?.map((row, i) => (
+          <tr key={row._id}>
+          <td>{i}</td>
+          <td>{row.status}</td>
+          <td>{row.name}</td>
+          <td>{row.price}</td>
+          <td>img loading</td>
+          <td><Button variant="primary"> Edit</Button>{" "}</td>
+          <td><Button variant="danger"onClick={() =>handleOnDelete(row._id)}> Delete </Button>{" "}</td>
+        </tr>
+        ))
+      }
+     
+    
   </tbody>
 </Table>
             
