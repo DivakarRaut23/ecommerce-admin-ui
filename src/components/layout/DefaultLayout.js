@@ -1,4 +1,5 @@
 import React from 'react'
+import {Jumbotron} from "react-bootstrap";
 import Header from './partials/Header'
 import Footer from './partials/Footer'
 
@@ -18,7 +19,10 @@ const DefaultLayout = ({children}) => {
                               
                 <div className="main">
                 <Header/>
+                <Jumbotron>
                 {children}
+                </Jumbotron>
+                
                 <Footer/>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import Category from './pages/category/Category';
 import Product from './pages/product/Product';
 import AddProduct from './pages/product/AddProduct';
+import EditProduct from "./pages/edit-product/EditProduct";
 
 
 
@@ -27,6 +28,9 @@ function App() {
           <Route path="/product/new">
             <AddProduct />
           </Route>
+          <Route exact path="/product/:_id">
+						<EditProduct />
+					</Route>
           <Route path="/reset-password">
             <PasswordReset/>
           </Route> 

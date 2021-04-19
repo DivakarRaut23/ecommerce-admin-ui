@@ -1,7 +1,7 @@
 import React from 'react'
 import {Form, Col, Button} from 'react-bootstrap'
 
-function AddCategoryForm() {
+export const  AddCategoryForm = () => {
     return (
         <div>
             <Form>
@@ -22,4 +22,4 @@ function AddCategoryForm() {
     )
 }
 
-export default AddCategoryForm
+

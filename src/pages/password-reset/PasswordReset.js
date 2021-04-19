@@ -1,6 +1,6 @@
 import React from 'react'
 
-import PasswordResetForm from '../../password-reset-form/PasswordResetForm'
+import PasswordResetForm from '../../components/password-reset-form/PasswordResetForm'
 
 import "./passwordReset.style.css"
 
