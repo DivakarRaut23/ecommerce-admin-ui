@@ -3,15 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Form, Col, Button, Spinner, Alert } from "react-bootstrap";
 
-import {
-	addNewCategory,
-	fetchCategories,
-} from "../../pages/category/categoryAction";
 
 export const EditCategoryForm = ({ categoryEdit }) => {
 	const dispatch = useDispatch();
 	console.log(categoryEdit);
-	const { isLoading, status, message, categoryList } = useSelector(
+	const { isLoading, status, message} = useSelector(
 		state => state.category
 	);
 	const [category, setCategory] = useState(categoryEdit);

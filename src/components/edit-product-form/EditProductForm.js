@@ -6,6 +6,7 @@ import {
 	updateAProduct,
 } from "../../pages/edit-product/editProductAction";
 import { useParams } from "react-router-dom";
+import { ProductCatList } from "../product-category-lists/ProductCatList";
 
 const initialState = {
 	name: "",
@@ -14,7 +15,7 @@ const initialState = {
 	status: true,
 	price: 0,
 	salePrice: 0,
-	saleEndDate: Date(),
+	saleEndDate: "",
 	description: "",
 	images: [],
 	categories: [],
@@ -22,6 +23,7 @@ const initialState = {
 
 export const EditProductForm = () => {
 	const dispatch = useDispatch();
+	
 	const { _id } = useParams();
 
 	const { isLoading, status, message, product } = useSelector(
@@ -35,7 +37,7 @@ export const EditProductForm = () => {
 			dispatch(fetchAProduct(_id));
 			setEditProduct(product);
 		}
-	}, [dispatch, editProduct, _id]);
+	}, [dispatch,product, editProduct, _id]);
 
 	// product._id !== editProduct._id && setEditProduct(product);
 
@@ -60,6 +62,26 @@ export const EditProductForm = () => {
 
 		dispatch(updateAProduct(updateProduct));
 	};
+
+	const onCatSelect = e => {
+		const {checked, value} = e.target;
+	
+		if(checked) {
+		  setEditProduct({
+			...editProduct,
+			categories:{...editProduct.categories, value}
+		  })
+		} else {
+		  const updatedCatIds = editProduct.categories.filter(id => id !== value)
+	
+		  setEditProduct({
+			...editProduct,
+			categories: updatedCatIds,
+	
+		  })
+		}
+	
+	  }
 
 	return (
 		<div>
@@ -201,6 +223,14 @@ export const EditProductForm = () => {
 				<option>5</option>
 			</Form.Control>
 		</Form.Group> */}
+
+		<hr />
+				<Form.Label>Select Categories</Form.Label>
+				<ProductCatList
+        onCatSelect = {onCatSelect}
+        selectedCatIds = {editProduct.categories}
+        />
+		<hr />
 
 					<Button variant="primary" type="submit">
 						Update Product

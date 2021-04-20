@@ -1,5 +1,4 @@
 import React from "react";
-import { ListGroup } from "react-bootstrap";
 import {AddCategoryForm} from "../../components/add-category-form/AddCategoryForm"
 import DefaultLayout from "../../components/layout/DefaultLayout";
 import { ListCategory } from "../../components/list-category/ListCategory";

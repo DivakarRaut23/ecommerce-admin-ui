@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-import AddProductForm from '../../components/add-product-form/AddProductForm'
+import {AddProductForm} from '../../components/add-product-form/AddProductForm'
 import DefaultLayout from '../../components/layout/DefaultLayout'
 
 const AddProduct = () => {
