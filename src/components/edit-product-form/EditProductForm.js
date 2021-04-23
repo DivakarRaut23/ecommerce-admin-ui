@@ -23,7 +23,6 @@ const initialState = {
 
 export const EditProductForm = () => {
 	const dispatch = useDispatch();
-	
 	const { _id } = useParams();
 
 	const { isLoading, status, message, product } = useSelector(
@@ -33,11 +32,11 @@ export const EditProductForm = () => {
 
 	useEffect(() => {
 		//call api and update our state for a individual product
-		if (!editProduct._id) {
+		if (!editProduct._id || editProduct._id !== product._id) {
 			dispatch(fetchAProduct(_id));
 			setEditProduct(product);
 		}
-	}, [dispatch,product, editProduct, _id]);
+	}, [dispatch, product, editProduct, _id]);
 
 	// product._id !== editProduct._id && setEditProduct(product);
 
@@ -64,24 +63,23 @@ export const EditProductForm = () => {
 	};
 
 	const onCatSelect = e => {
-		const {checked, value} = e.target;
-	
-		if(checked) {
-		  setEditProduct({
-			...editProduct,
-			categories:{...editProduct.categories, value}
-		  })
+		const { checked, value } = e.target;
+		if (checked) {
+			//PUT _ID IN SIDE THE ARRAY
+			setEditProduct({
+				...editProduct,
+				categories: [...editProduct.categories, value],
+			});
 		} else {
-		  const updatedCatIds = editProduct.categories.filter(id => id !== value)
-	
-		  setEditProduct({
-			...editProduct,
-			categories: updatedCatIds,
-	
-		  })
+			//take _id out of the array
+			const updatedCatIds = editProduct.categories.filter(id => id !== value);
+
+			setEditProduct({
+				...editProduct,
+				categories: updatedCatIds,
+			});
 		}
-	
-	  }
+	};
 
 	return (
 		<div>
@@ -195,6 +193,14 @@ export const EditProductForm = () => {
 						/>
 					</Form.Group>
 
+					<hr />
+					<Form.Label>Select Categories</Form.Label>
+					<ProductCatList
+						onCatSelect={onCatSelect}
+						selectedCatIds={editProduct.categories}
+					/>
+					<hr />
+
 					{/* <Form.Group>
 			<Form.Label>Images</Form.Label>
 			<Form.File
@@ -223,14 +229,6 @@ export const EditProductForm = () => {
 				<option>5</option>
 			</Form.Control>
 		</Form.Group> */}
-
-		<hr />
-				<Form.Label>Select Categories</Form.Label>
-				<ProductCatList
-        onCatSelect = {onCatSelect}
-        selectedCatIds = {editProduct.categories}
-        />
-		<hr />
 
 					<Button variant="primary" type="submit">
 						Update Product

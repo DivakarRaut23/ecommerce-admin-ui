@@ -11,8 +11,6 @@ export const ListCategory = () => {
 
 	const [showForm, setShowForm] = useState("");
 
-
-
 	const handleOnDeleteClicked = _id => {
 		if (window.confirm("Are you sure you want to delete the category?")) {
 			/// collection if _di

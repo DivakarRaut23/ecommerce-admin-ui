@@ -20,6 +20,7 @@ const initialState = {
 export const AddProductForm = () => {
 	const dispatch = useDispatch();
 	const [newProduct, setNewProduct] = useState(initialState);
+  const [images, setImages] = useState([])
 
 
 	const { isLoading, status, message } = useSelector(state => state.product);
@@ -36,7 +37,17 @@ export const AddProductForm = () => {
 	const handleOnSubmit = e => {
 		e.preventDefault();
 		console.log(newProduct);
-		dispatch(addNewProduct(newProduct));
+
+    const formData = new FormData()
+    Object.keys(newProduct).map(key => {
+     key !== "images" && formData.append(key, newProduct[key])
+    })
+
+    images.length && [...images].map(image =>{
+      formData.append("images", image)
+    })
+    
+		dispatch(addNewProduct(formData));
 	};
 
   const onCatSelect = e => {
@@ -59,6 +70,11 @@ export const AddProductForm = () => {
 
   }
 
+  const handleOnImageSelect = e => {
+    const {files} = e.target;
+    setImages(files)
+  }
+
 	return (
 		<div>
 			{isLoading && <Spinner variant="primary" animation="border" />}
@@ -68,7 +84,7 @@ export const AddProductForm = () => {
 					{message}
 				</Alert>
 			)}
-			<Form onSubmit={handleOnSubmit}>
+			<Form onSubmit={handleOnSubmit} encType="multipart/form-data">
 				<Form.Group controlId="formBasicEmail">
 					<Form.Label>Name</Form.Label>
 					<Form.Control
@@ -147,15 +163,7 @@ export const AddProductForm = () => {
 						placeholder="Writ full description"
 					/>
 				</Form.Group>
-				{/* <Form.Group>
-					<Form.Label>Images</Form.Label>
-					<Form.File
-						name="images"
-						id="exampleFormControlFile1"
-						onChange={handleOnchange}
-						label="Example file input"
-					/>
-				</Form.Group> */}
+			
 				<hr />
 				<Form.Label>Select Categories</Form.Label>
 				<ProductCatList 
@@ -163,6 +171,16 @@ export const AddProductForm = () => {
         selectedCatIds = {newProduct.categories}
         />
 				<hr />
+        <Form.Group>
+					<Form.Label>Images</Form.Label>
+					<Form.File
+						name="images"
+						id="exampleFormControlFile1"
+						onChange={handleOnImageSelect}
+						label="Upload image file only"
+            multiple
+					/>
+				</Form.Group>
 
 				<Button variant="primary" type="submit">
 					Submit

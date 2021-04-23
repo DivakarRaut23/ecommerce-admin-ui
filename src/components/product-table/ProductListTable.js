@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import { Spinner, Table } from 'react-bootstrap'
+import { Image, Spinner, Table } from 'react-bootstrap'
 import { Alert, Button } from 'react-bootstrap'
 import {fetchProducts,removeProducts} from '../../pages/product/productAction'
 
@@ -51,7 +51,7 @@ function ProductListTable() {
           <td>{row.status}</td>
           <td>{row.name}</td>
           <td>{row.price}</td>
-          <td>img loading</td>
+          <td><Image src={row.images[0]} width="80px"</td>
           <td><Button variant="primary"> Edit</Button>{" "}</td>
           <td><Button variant="danger"onClick={() =>handleOnDelete(row._id)}> Delete </Button>{" "}</td>
         </tr>
