@@ -8,8 +8,8 @@ export const saveProduct = frmDt => {
 		try {
 			const { data } = await axios.post(prodApi, frmDt, {
 				headers: {
-					"content-type": "multipart/form-data"
-				}
+					"Content-type": "multipart/form-data",
+				},
 			});
 
 			resolve(data);
@@ -55,10 +55,10 @@ export const updateProduct = formDt => {
 	});
 };
 
-export const deleteProducts = _id => {
+export const productDelete = _id => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const { data } = await axios.delete(prodApi, { data: _id });
+			const { data } = await axios.delete(prodApi, { data: { _id } });
 
 			resolve(data);
 		} catch (error) {
