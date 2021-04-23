@@ -19,6 +19,7 @@ export const ListCategory = () => {
 				if (row.parentCat === _id) {
 					return row._id;
 				}
+				return null
 			});
 
 			const idsToDelete = childIds.filter(row => row);

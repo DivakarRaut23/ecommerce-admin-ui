@@ -40,11 +40,11 @@ export const AddProductForm = () => {
 
     const formData = new FormData()
     Object.keys(newProduct).map(key => {
-     key !== "images" && formData.append(key, newProduct[key])
+    return key !== "images" && formData.append(key, newProduct[key])
     })
 
     images.length && [...images].map(image =>{
-      formData.append("images", image)
+     return  formData.append("images", image)
     })
     
 		dispatch(addNewProduct(formData));
@@ -101,11 +101,11 @@ export const AddProductForm = () => {
 				</Form.Group>
 				<Form.Group>
 					<Form.Check
-						name="isAvailable"
-						id="isAvailable"
+						name="status"
+						id="status"
 						type="switch"
-						label="Available"
-						value={newProduct.isAvailable}
+						label="Status"
+						value={newProduct.status}
 						onChange={handleOnchange}
 					/>
 				</Form.Group>

@@ -9,7 +9,7 @@ import {
 import {
 	saveProduct,
 	getProducts,
-	deleteProducts,
+	productDelete,
 } from "../../apis/productAPI";
 
 export const addNewProduct = frmDt => async dispatch => {
@@ -52,7 +52,7 @@ export const removeProducts = id => async dispatch => {
 	try {
 		dispatch(requestPending());
 
-		const result = await deleteProducts(id); //{status, message, result:[]}
+		const result = await productDelete(id); //{status, message, result:[]}
 
 		dispatch(deleteProdSuccess(result));
 

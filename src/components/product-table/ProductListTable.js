@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Alert, Button, Image, Spinner, Table } from "react-bootstrap";
 import {
 	fetchProducts,
-	deleteProduct,
+	removeProducts,
 } from "../../pages/product/productAction";
 
 const ProductListTable = () => {
@@ -20,7 +20,7 @@ const ProductListTable = () => {
 	}, [dispatch]);
 
 	const handleOnDelete = _id => {
-		dispatch(deleteProduct(_id));
+		dispatch(removeProducts(_id));
 	};
 
 	return (
