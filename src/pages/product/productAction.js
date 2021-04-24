@@ -2,15 +2,11 @@ import {
 	requestPending,
 	addProductSuccess,
 	fetchAllProductSuccess,
+	deleteProductSuccess,
 	requestFail,
-	deleteProdSuccess,
 } from "./productSlice";
 
-import {
-	saveProduct,
-	getProducts,
-	deleteProducts,
-} from "../../apis/productAPI";
+import { saveProduct, getProducts, productDelete } from "../../apis/productAPI";
 
 export const addNewProduct = frmDt => async dispatch => {
 	try {
@@ -36,7 +32,6 @@ export const fetchProducts = () => async dispatch => {
 		dispatch(requestPending());
 
 		const result = await getProducts(); //{status, message, result:[]}
-
 		dispatch(fetchAllProductSuccess(result));
 	} catch (error) {
 		const err = {
@@ -48,13 +43,13 @@ export const fetchProducts = () => async dispatch => {
 	}
 };
 
-export const removeProducts = id => async dispatch => {
+export const deleteProduct = _id => async dispatch => {
 	try {
 		dispatch(requestPending());
 
-		const result = await deleteProducts(id); //{status, message, result:[]}
+		const result = await productDelete(_id); //{status, message, result:[]}
 
-		dispatch(deleteProdSuccess(result));
+		dispatch(deleteProductSuccess(result));
 
 		result.status === "success" && dispatch(fetchProducts());
 	} catch (error) {

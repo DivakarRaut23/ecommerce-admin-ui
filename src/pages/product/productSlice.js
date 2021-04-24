@@ -4,7 +4,7 @@ const initialState = {
 	isLoading: false,
 	status: "",
 	message: "",
-    deleteMsg: "",
+	deleteMsg: "",
 	productList: [],
 };
 
@@ -15,7 +15,6 @@ const productSlice = createSlice({
 		requestPending: state => {
 			state.isLoading = true;
 		},
-
 		addProductSuccess: (state, { payload }) => {
 			state.isLoading = false;
 			state.status = payload.status;
@@ -23,14 +22,14 @@ const productSlice = createSlice({
 		},
 
 		fetchAllProductSuccess: (state, { payload }) => {
-			state.productList = payload.result;
+			state.productList = payload.result || [];
 			state.isLoading = false;
 		},
 
-		deleteProdSuccess: (state, { payload }) => {
+		deleteProductSuccess: (state, { payload }) => {
 			state.isLoading = false;
 			state.status = payload.status;
-			state.message = payload.message;
+			state.deleteMsg = payload.message;
 		},
 
 		requestFail: (state, { payload }) => {
@@ -48,7 +47,7 @@ export const {
 	addProductSuccess,
 	fetchAllProductSuccess,
 	requestFail,
-	deleteProdSuccess,
+	deleteProductSuccess,
 } = actions;
 
 export default reducer;

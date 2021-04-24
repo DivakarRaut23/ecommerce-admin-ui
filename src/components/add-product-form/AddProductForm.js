@@ -4,7 +4,6 @@ import { Alert, Button, Form, Spinner } from "react-bootstrap";
 import { addNewProduct } from "../../pages/product/productAction";
 import { ProductCatList } from "../product-category-lists/ProductCatList";
 
-
 const initialState = {
 	name: "",
 	qty: 0,
@@ -20,8 +19,7 @@ const initialState = {
 export const AddProductForm = () => {
 	const dispatch = useDispatch();
 	const [newProduct, setNewProduct] = useState(initialState);
-  const [images, setImages] = useState([])
-
+	const [images, setImages] = useState([]);
 
 	const { isLoading, status, message } = useSelector(state => state.product);
 
@@ -36,44 +34,45 @@ export const AddProductForm = () => {
 
 	const handleOnSubmit = e => {
 		e.preventDefault();
-		console.log(newProduct);
+		const formData = new FormData();
 
-    const formData = new FormData()
-    Object.keys(newProduct).map(key => {
-     key !== "images" && formData.append(key, newProduct[key])
-    })
+		Object.keys(newProduct).map(key => {
+			key !== "images" && formData.append(key, newProduct[key]);
+		});
 
-    images.length && [...images].map(image =>{
-      formData.append("images", image)
-    })
-    
+		images.length &&
+			[...images].map(image => {
+				formData.append("images", image);
+			});
+
 		dispatch(addNewProduct(formData));
 	};
 
-  const onCatSelect = e => {
-    const {checked, value} = e.target;
+	const onCatSelect = e => {
+		const { checked, value } = e.target;
+		if (checked) {
+			//PUT _ID IN SIDE THE ARRAY
+			setNewProduct({
+				...newProduct,
+				categories: [...newProduct.categories, value],
+			});
+		} else {
+			//take _id out of the array
+			const updatedCatIds = newProduct.categories.filter(id => id !== value);
 
-    if(checked) {
-      setNewProduct({
-        ...newProduct,
-        categories:{...newProduct.categories, value}
-      })
-    } else {
-      const updatedCatIds = newProduct.categories.filter(id => id !== value)
+			setNewProduct({
+				...newProduct,
+				categories: updatedCatIds,
+			});
+		}
+	};
 
-      setNewProduct({
-        ...newProduct,
-        categories: updatedCatIds,
+	const handleOnImageSelect = e => {
+		const { files } = e.target;
+		console.log(files);
 
-      })
-    }
-
-  }
-
-  const handleOnImageSelect = e => {
-    const {files} = e.target;
-    setImages(files)
-  }
+		setImages(files);
+	};
 
 	return (
 		<div>
@@ -101,11 +100,11 @@ export const AddProductForm = () => {
 				</Form.Group>
 				<Form.Group>
 					<Form.Check
-						name="isAvailable"
-						id="isAvailable"
+						name="status"
+						id="status"
 						type="switch"
-						label="Available"
-						value={newProduct.isAvailable}
+						label="Status"
+						value={newProduct.status}
 						onChange={handleOnchange}
 					/>
 				</Form.Group>
@@ -163,22 +162,23 @@ export const AddProductForm = () => {
 						placeholder="Writ full description"
 					/>
 				</Form.Group>
-			
+
 				<hr />
 				<Form.Label>Select Categories</Form.Label>
-				<ProductCatList 
-        onCatSelect = {onCatSelect}
-        selectedCatIds = {newProduct.categories}
-        />
+				<ProductCatList
+					onCatSelect={onCatSelect}
+					selectedCatIds={newProduct.categories}
+				/>
 				<hr />
-        <Form.Group>
+				<Form.Group>
 					<Form.Label>Images</Form.Label>
 					<Form.File
 						name="images"
 						id="exampleFormControlFile1"
 						onChange={handleOnImageSelect}
 						label="Upload image file only"
-            multiple
+						multiple
+						accept="image/*"
 					/>
 				</Form.Group>
 
