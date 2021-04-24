@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Form, Col, Button, Spinner, Alert } from "react-bootstrap";
+import ModalBox from "../modal/ModalBox";
+import { toggleCateforyEditModal } from "../../pages/category/categorySlice";
 
 
 export const EditCategoryForm = ({ categoryEdit }) => {
@@ -33,8 +35,18 @@ export const EditCategoryForm = ({ categoryEdit }) => {
 		console.log(category);
 	};
 
+	const toggleModal= () => {
+		dispatch(toggleCateforyEditModal())
+		
+	}
+
 	return (
+		<ModalBox
+		show={show}
+		toggleModal={toggleModal}
+		>
 		<div className="add-category-form">
+		
 			{isLoading && <Spinner variant="primary" animation="border" />}
 
 			{message && (
@@ -61,5 +73,6 @@ export const EditCategoryForm = ({ categoryEdit }) => {
 				</Form.Row>
 			</Form>
 		</div>
+		</ModalBox>
 	);
 };

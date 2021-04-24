@@ -49,6 +49,7 @@ export const {
 	fetchAllProductSuccess,
 	requestFail,
 	deleteProdSuccess,
+	
 } = actions;
 
 export default reducer;

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { removeCategories } from "../../pages/category/categoryAction";
 import { EditCategoryForm } from "../edit-category-form/EditCategoryForm";
+import moduleName, { toggleCateforyEditModal } from '../../pages/category/categorySlice'
 
 export const ListCategory = () => {
 	const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export const ListCategory = () => {
 	};
 
 	const handleEdit = _id => {
+		dispatch(toggleCateforyEditModal())
 		console.log(_id);
 		showForm === _id ? setShowForm("") : setShowForm(_id);
 	};

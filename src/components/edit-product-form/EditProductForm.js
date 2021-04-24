@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Button, Form, Spinner } from "react-bootstrap";
+import { Alert, Button, Form, Spinner, Image } from "react-bootstrap";
 import {
 	fetchAProduct,
 	updateAProduct,
 } from "../../pages/edit-product/editProductAction";
 import { useParams } from "react-router-dom";
 import { ProductCatList } from "../product-category-lists/ProductCatList";
+import ModalBox from "../modal/ModalBox";
 
 const initialState = {
 	name: "",
@@ -22,6 +23,7 @@ const initialState = {
 };
 
 export const EditProductForm = () => {
+	
 	const dispatch = useDispatch();
 	const { _id } = useParams();
 
@@ -29,6 +31,9 @@ export const EditProductForm = () => {
 		state => state.selectedProduct
 	);
 	const [editProduct, setEditProduct] = useState(initialState);
+	const [images, setImages] = useState([])
+	const [imgToDelete, setImgToDelete] = useState([])
+	const [show, setShow] = useState(false);
 
 	useEffect(() => {
 		//call api and update our state for a individual product
@@ -57,9 +62,25 @@ export const EditProductForm = () => {
 		e.preventDefault();
 
 		const { __v, ...updateProduct } = editProduct;
-		console.log(updateProduct);
+		
+		const formData = new FormData();
 
-		dispatch(updateAProduct(updateProduct));
+		//append form data
+		Object.keys(updateProduct).map(key => {
+			key !== "images" && formData.append(key, updateProduct[key]);
+		});
+
+		//append new images
+		images.length &&
+			[...images].map(image => {
+				formData.append("images", image);
+			});
+
+		//append image to delete
+		imgToDelete.length && formData.append("imgToDelete", imgToDelete);
+
+		console.log(formData);
+		dispatch(updateAProduct(formData));
 	};
 
 	const onCatSelect = e => {
@@ -81,7 +102,34 @@ export const EditProductForm = () => {
 		}
 	};
 
+	const onImageDeleteSelect = e => {
+		const { checked, value } = e.target;
+		if (checked) {
+			//PUT _ID IN SIDE THE ARRAY
+			setImgToDelete([...imgToDelete,value]);
+		} else {
+			//take _id out of the array
+			const updatedCatIds = imgToDelete.categories.filter(id => id !== value);
+
+			setEditProduct({
+				...editProduct,
+				categories: updatedCatIds,
+			});
+		}
+	};
+
+	const handleOnImageSelect = e => {
+		const {files} = e.target;
+		setImages(files)
+	  }
+
+	
+
 	return (
+		<ModalBox
+		show={show}
+		
+		>
 		<div>
 			{isLoading && <Spinner variant="primary" animation="border" />}
 
@@ -199,36 +247,37 @@ export const EditProductForm = () => {
 						onCatSelect={onCatSelect}
 						selectedCatIds={editProduct.categories}
 					/>
-					<hr />
+							<hr />
+							<div className="d-flex justify-content-start">
+							{
+								editProduct?.images?.length &&
+								editProduct.images.map((imgSource, i) => {
+									<div className="image-item">
+									<Image src={imgSource} width="80px" height="auto" className="m-2 p-1"/>
+									<Form.Check
+								type="checkbox"
+								defaultValue={imgSource}
+								onChange={onImageDeleteSelect}
+								checked={imgToDelete?.includes(imgSource)}
+								label="Delete"
+							/>
+							</div>
+								})
+							}
+							</div>
+        <Form.Group>
+					<Form.Label>Images</Form.Label>
+					<Form.File
+						name="images"
+						id="exampleFormControlFile1"
+						onChange={handleOnImageSelect}
+						label="Upload image file only"
+            multiple
+					/>
+				</Form.Group>
 
-					{/* <Form.Group>
-			<Form.Label>Images</Form.Label>
-			<Form.File
-				name="images"
-				id="exampleFormControlFile1"
-				value={editProduct.images}
-				onChange={handleOnchange}
-				label="Example file input"
-			/>
-		</Form.Group> */}
-
-					{/* <Form.Group>
-			<Form.Label>Select Categories</Form.Label>
-			<Form.Control
-				name="categories"
-				as="select"
-				defaultValue={editProduct.categories}
-				onChange={handleOnchange}
-				multiple
-				required
-			>
-				<option>1</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-				<option>5</option>
-			</Form.Control>
-		</Form.Group> */}
+					
+		
 
 					<Button variant="primary" type="submit">
 						Update Product
@@ -238,5 +287,6 @@ export const EditProductForm = () => {
 				// {isLoading && <Spinner variant="primary" animation="border" />}
 			)}
 		</div>
+		</ModalBox>
 	);
 };

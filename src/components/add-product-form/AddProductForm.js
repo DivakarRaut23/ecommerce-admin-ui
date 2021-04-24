@@ -43,7 +43,7 @@ export const AddProductForm = () => {
     return key !== "images" && formData.append(key, newProduct[key])
     })
 
-    images.length && [...images].map(image =>{
+    images?.length && [...images].map(image =>{
      return  formData.append("images", image)
     })
     
@@ -160,7 +160,7 @@ export const AddProductForm = () => {
 						required
 						value={newProduct.description}
 						onChange={handleOnchange}
-						placeholder="Writ full description"
+						placeholder="Write full description"
 					/>
 				</Form.Group>
 			
