@@ -1,17 +1,40 @@
-import React, {useState} from 'react'
-import {Form,Button, Card} from 'react-bootstrap'
+import React, {useState, useEffect} from 'react'
+import {Form,Button, Card, Alert, Spinner} from 'react-bootstrap'
 import "./loginform.style.css"
+import {useHistory, useLocation} from 'react-router-dom'
+
+import {useSelector, useDispatch} from 'react-redux'
+import { sendLogin, userAutoLogin } from '../../pages/login/loginAction'
 
 const initialState = {
-    email: "twinscreation@gmail.com",
-    password: "password123"
-    
-}
+    email: "rautbhai2g3@gmail.com",
+    password: "unitedWay23"
+  }
 
 
 const LoginForm = () => {
 
+    const history = useHistory();
+    const location = useLocation();
+    const dispatch = useDispatch();
+
+    const {isLoading , loginResponse, isAuth} = useSelector(state => state.login)
+
+
 const [login, setLogin] = useState(initialState)
+
+const token = sessionStorage.getItem("accessJWT")
+
+let {from } =  location.state || {from: {pathname: '/'}}
+
+
+
+useEffect(() => {
+    !isAuth && dispatch(userAutoLogin());
+    
+    if (isAuth) history.replace(from);
+    
+}, [isAuth])
 
 const handleOnChange = (e) => {
     
@@ -26,12 +49,29 @@ const handleOnChange = (e) => {
 
 const handleOnSubmit = e => {
     e.preventDefault();
-    console.log(login)
+    
+    if(!login.email  || !login.password) {
+       return alert("Please fill up all the input fields")
+    }
+
+    dispatch(sendLogin(login))
+   
+    // history.push("/dashboard");
 }
 
     return (
         <div className="login-form">
-            <Card className="p-4">
+          
+
+            <Card className="p-1">
+
+            {isLoading && <Spinner variant="primary" animation="border" />}
+
+{loginResponse?.message && (
+    <Alert variant={loginResponse?.status === "success" ? "success" : "danger"}>
+        {loginResponse.message}
+    </Alert>
+)}
 
             <Form onSubmit={handleOnSubmit}>
             <Form.Group controlId="formBasicEmail">
