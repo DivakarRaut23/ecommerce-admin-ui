@@ -14,4 +14,3 @@ export const loginAPI = frmDt => {
 		}
 	});
 };
-

@@ -40,8 +40,6 @@ export const EditCategoryForm = () => {
 		});
 	};
 
-	//this is just a test 
-
 	const handleOnSubmit = e => {
 		e.preventDefault();
 
@@ -107,8 +105,6 @@ export const EditCategoryForm = () => {
 								))}
 							</Form.Control>
 						</Form.Group>
-
-						
 
 						<Button variant="primary" type="submit">
 							Submit

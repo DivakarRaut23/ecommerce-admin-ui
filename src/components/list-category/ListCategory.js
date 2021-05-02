@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, ListGroup } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -11,11 +11,11 @@ import {
 
 export const ListCategory = () => {
 	const dispatch = useDispatch();
-	const { categoryList} = useSelector(
+	const { categoryList, selectedCategory } = useSelector(
 		state => state.category
 	);
 
-	
+	const [showForm, setShowForm] = useState("");
 
 	const handleOnDeleteClicked = _id => {
 		if (window.confirm("Are you sure you want to delete the category?")) {
@@ -25,7 +25,6 @@ export const ListCategory = () => {
 				if (row.parentCat === _id) {
 					return row._id;
 				}
-				return null
 			});
 
 			const idsToDelete = childIds.filter(row => row);

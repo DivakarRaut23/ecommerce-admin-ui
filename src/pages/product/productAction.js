@@ -61,3 +61,22 @@ export const deleteProduct = _id => async dispatch => {
 		dispatch(requestFail(err));
 	}
 };
+
+// export const removeCategories = idArg => async dispatch => {
+// 	try {
+// 		dispatch(requestPending());
+
+// 		const result = await deleteCategories(idArg); //{status, message, result:[]}
+
+// 		dispatch(deleteCatsSuccess(result));
+
+// 		result.status === "success" && dispatch(fetchCategories());
+// 	} catch (error) {
+// 		const err = {
+// 			status: "error",
+// 			message: error.message,
+// 		};
+
+// 		dispatch(requestFail(err));
+// 	}
+// };

@@ -1,24 +1,21 @@
-import React from 'react'
-import { Card } from 'react-bootstrap'
-import {AddProductForm} from '../../components/add-product-form/AddProductForm'
-import DefaultLayout from '../../components/layout/DefaultLayout'
+import React from "react";
+import { Card } from "react-bootstrap";
+import { AddProductForm } from "../../components/add-product-form/AddProductForm";
+import DefaultLayout from "../../components/layout/DefaultLayout";
 
 const AddProduct = () => {
-    return (
+	return (
+		<DefaultLayout>
+			<h1>Add new Product</h1>
+			<hr />
 
-        <DefaultLayout>
-        <div>
-            <h1>Add New Product</h1>
-            <hr/>
-            <div className="add-new-product-form">
-                <Card className="p-4">
-                <AddProductForm/>
-                </Card>
-            </div>
-            
-        </div>
-        </DefaultLayout>
-    )
-}
+			<div className="add-new-product-form">
+				<Card className="p-4">
+					<AddProductForm />
+				</Card>
+			</div>
+		</DefaultLayout>
+	);
+};
 
-export default AddProduct
+export default AddProduct;

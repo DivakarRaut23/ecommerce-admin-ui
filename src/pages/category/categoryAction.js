@@ -12,7 +12,7 @@ import {
 	getCategories,
 	deleteCategories,
 	updateCategory,
-} from "../../apis/categoryAPI";
+} from "../../apis/categoriAPI";
 
 export const addNewCategory = frmDt => async dispatch => {
 	try {

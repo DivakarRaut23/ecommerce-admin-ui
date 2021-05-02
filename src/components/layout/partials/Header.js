@@ -1,36 +1,37 @@
-import React from 'react'
+import React from "react";
+import { Navbar } from "react-bootstrap";
 
-import {Navbar} from 'react-bootstrap'
+import { logOut } from "../../../pages/login/loginAction";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
+const Headers = () => {
+	const dispatch = useDispatch();
+	const history = useHistory();
 
-import {logOut} from '../../../pages/login/loginAction'
+	const { adminProfile } = useSelector(state => state.profile);
 
-import {useHistory} from 'react-router-dom'
+	const handleOnLogout = () => {
+		console.log("logging out./..");
 
-import {useDispatch} from 'react-redux'
-const Header = () => {
+		dispatch(logOut(adminProfile?._id));
+		history.push("/");
+	};
 
-  const dispatch = useDispatch()
-  const history = useHistory();
+	return (
+		<Navbar bg="dark" variant="dark">
+			{/* <Navbar.Brand href="#home">Navbar with text</Navbar.Brand> */}
+			<Navbar.Toggle />
+			<Navbar.Collapse className="justify-content-end">
+				<Navbar.Text>
+					<i className="fas fa-bell text-success"></i>
+				</Navbar.Text>
+				<Navbar.Text onClick={handleOnLogout} style={{ cursor: "pointer" }}>
+					<i className="fas fa-user  text-primary"></i> Log Out
+				</Navbar.Text>
+			</Navbar.Collapse>
+		</Navbar>
+	);
+};
 
-  const handleLogOut = () => {
-
-    dispatch(logOut())
-    history.push("/")
-  }
-
-
-
-    return (
-      <Navbar bg="dark" variant="dark">
-      {/* <Navbar.Brand href="#home">Navbar with text</Navbar.Brand> */}
-      <Navbar.Toggle />
-      <Navbar.Collapse className="justify-content-end">
-      <Navbar.Text><i class="fas fa-bell text-success"></i></Navbar.Text>
-        <Navbar.Text onClick={handleLogOut} style={{ cursor: "pointer" }}><i class="fas fa-user text-primary"></i> Log Out</Navbar.Text>
-      </Navbar.Collapse>
-    </Navbar>
-    )
-}
-
-export default Header
+export default Headers;

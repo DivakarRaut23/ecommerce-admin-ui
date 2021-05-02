@@ -1,12 +1,12 @@
 import React from "react";
 import DefaultLayout from "../../components/layout/DefaultLayout";
 
-const Dashboard = () => {
+const Profile = () => {
 	return (
 		<DefaultLayout>
-			<div className="dashboard">Welcome to the Admin dashboard</div>
+			<div className="profile-page">profile page</div>
 		</DefaultLayout>
 	);
 };
 
-export default Dashboard;
+export default Profile;
