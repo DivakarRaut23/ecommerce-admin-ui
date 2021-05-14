@@ -5,10 +5,6 @@ import { useSelector } from "react-redux";
 export const PrivateRoute = ({ children, ...rest }) => {
 	const { isAuth } = useSelector(state => state.login);
 
-	// useEffect(() => {
-	// 	console.log(isAuth, "from pr");
-	// }, [isAuth]);
-
 	return (
 		<Route
 			{...rest}
